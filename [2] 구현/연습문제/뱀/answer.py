@@ -1,6 +1,12 @@
 import sys
+import queue
+sys.stdin = open("input.txt", "r")
 
-sys.stdin = open("input_2.txt", "r")
+# 부족했던 점 : 사과 위치의 좌상단 좌표가 (1, 1)이었음
+# (0, 0) 이라고 당연하게 생각하고 풀어서
+# 어디서 잘못한건지 쉽게 못찾아냄
+# 문제 조건 처음에 확실히 확인할 것
+
 # 뱀 게임
 # 뱀이 돌아다니다가 벽 or 자신의 몸에 부딪히면 게임이 끝남
 # 뱀의 초기 위치는 (0,0), 초기 방향은 오른쪽, 초기 길이는 1
@@ -12,15 +18,20 @@ dy = 1
 # 0은 빈칸, 1은 사과, 2는 뱀
 c_time = 0
 x, y = 0, 0
+
+# 뱀 몸통이 있는 위치 queue로 선언
+# 선입 선출이니까 Queue가 제일 적합함
+hebi_queue = queue.Queue()
+hebi_queue.put([x, y])
+
 board_len = int(input())
-print(board_len)
 board = [[0] * board_len for _ in range(board_len)]
 # 뱀의 초기 위치
 board[x][y] = 2
 apple_num = int(input())
 for _ in range(apple_num):
     a_x, a_y = map(int, input().split())
-    board[a_x][a_y] = 1
+    board[a_x-1][a_y-1] = 1
 
 hebi_dir_num = int(input())
 hebi_dir = {}
@@ -30,28 +41,25 @@ for _ in range(hebi_dir_num):
     time, direction = map(str, input().split())
     hebi_dir[int(time)] = direction
 
+# 부족했던 부분
+# 방향 전환에 규칙이 있으면
+# 리스트랑 인덱스 활용해서 만들면 좋을듯
+# 방향 전환 리스트 동, 남, 서, 북
+dx_list = [0, 1, 0, -1]
+dy_list = [1, 0, -1, 0]
+dir_idx = 0
 while True:
     if c_time in hebi_dir:
         print(c_time)
         print(hebi_dir[c_time])
-        if hebi_dir[c_time] == 'L':
-            if dx ==0 and dy ==1:
-                dx, dy = -1, 0
-            elif dx==0 and dy==-1:
-                dx, dy = 1, 0
-            elif dx == -1 and dy == 0:
-                dx, dy = 0, -1
-            elif dx == 1 and dy == 0:
-                dx, dy = 0, 1
+        if hebi_dir[c_time]=='L':
+            dir_idx = (dir_idx + 4 - 1)%4
+            dx = dx_list[dir_idx]
+            dy = dy_list[dir_idx]
         else:
-            if dx ==0 and dy ==1:
-                dx, dy = 1, 0
-            elif dx==0 and dy==-1:
-                dx, dy = -1, 0
-            elif dx == -1 and dy == 0:
-                dx, dy = 0, 1
-            elif dx == 1 and dy == 0:
-                dx, dy = 0, -1
+            dir_idx = (dir_idx + 1)%4
+            dx = dx_list[dir_idx]
+            dy = dy_list[dir_idx]
     else :
         print(c_time)
 
@@ -66,11 +74,14 @@ while True:
         x = x + dx
         y = y + dy
         board[x][y] = 2
+        hebi_queue.put([x, y])
     elif board[x+dx][y+dy]==0:
-        board[x][y] = 0
+        tail_x, tail_y = hebi_queue.get()
+        board[tail_x][tail_y] = 0
         x = x+dx
         y = y+dy
         board[x][y]=2
+        hebi_queue.put([x, y])
     else:
         print('hebi body')
         break
