@@ -21,17 +21,24 @@ sys.stdin = open("input.txt", "r")
 N, L, R = map(int, input().split())
 
 spy = [list(map(int, input().split())) for _ in range(N)]
-
 dx = [1, -1, 0, 0]
 dy = [0, 0, 1, -1]
+city_queue = deque((0, 0))
+checked = [[0] * N] * N
 
 print(spy)
-while True:
-    for i in range(N):
-        for j in range(N):
-            for dir_idx in range(4):
-                nx = i + dx[dir_idx]
-                ny = j + dy[dir_idx]
-                if 0<=nx<N and 0<=ny<N and 20<=abs(spy[i][j]-spy[nx][ny])<=50:
+while city_queue :
+        x, y = city_queue.popleft()
+        for dir_idx in range(4):
+            nx = x + dx[dir_idx]
+            ny = y + dy[dir_idx]
+            if 0<=nx<N and 0<=ny<N:
+                if L<=abs(spy[x][y]-spy[nx][ny])<=R:
+                    city_queue.append((nx, ny))
+
+
+
+print(city_queue)
+
 
 
