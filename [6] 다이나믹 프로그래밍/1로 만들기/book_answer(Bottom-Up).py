@@ -1,5 +1,7 @@
 import sys
 
+# answer
+# input 1: 1
 sys.stdin = open("input.txt", "r")
 
 n = int(sys.stdin.readline().rstrip())
