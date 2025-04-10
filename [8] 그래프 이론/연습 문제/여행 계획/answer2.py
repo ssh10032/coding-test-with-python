@@ -33,11 +33,21 @@ plan = list(map(int, sys.stdin.readline().rstrip().split()))
 print(parent)
 print(plan)
 
-result = 0
-p = parent[plan[0]]
-for i in plan:
-    if p != parent[i]:
-        print("NO")
-        break
-    else:
-        print("YES")
+# 확인 여부 체크해주는 함수를 구현하는게 더 깔끔함!!!
+# result = 0
+# p = parent[plan[0]]
+# for i in plan:
+#     if p != parent[i]:
+#         print("NO")
+#         break
+#     else:
+#         continue
+# print("YES")
+
+def check(start):
+    for p in plan:
+        if parent[start]!=find_parent(parent, p):
+            return "NO"
+    return "YES"
+
+print(check(plan[0]))
