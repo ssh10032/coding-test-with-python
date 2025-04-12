@@ -6,16 +6,16 @@ sys.stdin = open("input.txt", "r")
 for tc in range(int(sys.stdin.readline().rstrip())):
     # 노드의 개수 입력 받기
     n = int(sys.stdin.readline().rstrip())
-    print(n)
+    # print(n)
     # 모든 노드에 대한 진입 차수는 0으로 초기화
     indegree = [0] * (n+1)
     # 간선 정보를 담기 위한 인접 행렬 초기화
     # 2차원 행렬로 만듬?
     graph = [[False] * (n+1) for i in range(n+1)]
-    print(graph)
+    # print(graph)
     # 작년 순위 정보 입력
     data = list(map(int, sys.stdin.readline().rstrip().split()))
-    print(data)
+    # print(data)
     # 방향 그래프의 간선 정보 초기화
     for i in range(n):
         for j in range(i+1, n):
@@ -37,7 +37,7 @@ for tc in range(int(sys.stdin.readline().rstrip())):
             graph[b][a]=False
             indegree[a]-=1
             indegree[b]+=1
-    print(graph)
+    # print(graph)
     # 위상 정렬 시작
     result = []
     # 큐 기능을 위한 deque 라이브러리 사용
@@ -68,9 +68,9 @@ for tc in range(int(sys.stdin.readline().rstrip())):
         for j in range(1, n+1):
             if graph[now][j]:
                 indegree[j]-=1
-            # 새롭게 진입 차수가 0이 되는 노드를 큐에 삽입
-            if indegree[j] == 0:
-                q.append(j)
+                # 새롭게 진입 차수가 0이 되는 노드를 큐에 삽입
+                if indegree[j] == 0:
+                    q.append(j)
 
     if cycle:
         print("IMPOSSIBLE")
