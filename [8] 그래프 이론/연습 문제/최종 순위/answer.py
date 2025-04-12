@@ -19,11 +19,30 @@ sys.stdin = open("input.txt", "r")
 # 첫째 줄은 테스트 케이스의 수
 test = int(sys.stdin.readline().rstrip())
 
+# 내 접근 방식
+# 팀 간의 순위 매기는 문제니까
+# 위상 정렬 알고리즘을 사용한 '선수 과목' 문제랑 비슷하다고 생각됨
+# 상대 순위 정보를 가지고, 간선 그래프를 수정?
+
+# >> 간선 그래프를 2차원의 인접 행렬로 표현하고, 상대 순위를 토대로 수정하는 것이
+# 가장 핵심 아이디어 였던 것 같았음
+# answer2에서 다시 풀어보기
+
 for _ in range(test):
     # 팀 수 n
     n = int(sys.stdin.readline().rstrip())
+
+    indegree = [0] * (n+1)
+    graph = [[] for i in range(n+1)]
     # 작년 팀 성적 순위
     p_rank = list(map(int, sys.stdin.readline().rstrip().split()))
+    for i in range(0, n-1):
+        graph[p_rank[i]]=p_rank[i+1]
+    for i in range(len(p_rank)):
+        if i == len(p_rank)-1:
+            continue
+        else:
+            indegree[p_rank[i]] = 1
     # 상대적인 등수가 바뀐 쌍의 수
     m = int(sys.stdin.readline().rstrip())
     # 바뀐 팀 쌍들
@@ -33,3 +52,6 @@ for _ in range(test):
         c_rank.append((a,b))
     print(p_rank)
     print(c_rank)
+    print(indegree)
+    print(graph)
+    print()
