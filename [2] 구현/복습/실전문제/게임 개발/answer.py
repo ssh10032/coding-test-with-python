@@ -27,19 +27,19 @@ for _ in range(n):
 
 # print(visited)
 # print(matrix)
-while True:
-    for i in range(len(direction)):
-        if d == direction[i]:
-            for j in range(1, len(direction)+1):
-                next_idx = (i+j)%4
-                nx = a + dx[next_idx]
-                ny = b + dy[next_idx]
-                if 0<nx<=m and 0<ny<=n:
-                    if matrix[nx][ny]==0 and visited[nx][ny]==0:
-                        a = nx
-                        b = ny
-                        visited[a][b]=1
-                    else:
+# while True:
+#     for i in range(len(direction)):
+#         if d == direction[i]:
+#             for j in range(1, len(direction)+1):
+#                 next_idx = (i+j)%4
+#                 nx = a + dx[next_idx]
+#                 ny = b + dy[next_idx]
+#                 if 0<nx<=m and 0<ny<=n:
+#                     if matrix[nx][ny]==0 and visited[nx][ny]==0:
+#                         a = nx
+#                         b = ny
+#                         visited[a][b]=1
+#                     else:
 
 
 
