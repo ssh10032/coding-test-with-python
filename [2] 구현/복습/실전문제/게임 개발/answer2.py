@@ -38,38 +38,36 @@ for i in range(len(directions)):
         c_idx = i
 print("c_idx is", c_idx)
 result = 0
-def check():
-    while True:
-        for i in range(1, len(directions)+1):
-            n_idx = (c_idx+i)%4
-            na = a + dx[n_idx]
-            nb = b+ dy[n_idx]
-            # print("na is ", na)
-            # print("nb is ", nb)
-            if 0<=na<n and 0<=nb<m:
-                if field[na][nb]==0 and visited[na][nb]==0:
-                    print("na is ", na)
-                    print("nb is ", nb)
-                    a = na
-                    b = nb
-                    c_idx=n_idx
-                    visited[na][nb]=1
-                    result+=1
-                    print(1)
-                    break
-                else:
-                    continue
+
+# 내 접근 잘못된 부분 : 방향 전환을 for문으로 하는게 잘못됨?
+while True:
+    for i in range(1, len(directions)+1):
+        n_idx = (c_idx+i)%4
+        na = a + dx[n_idx]
+        nb = b+ dy[n_idx]
+        # print("na is ", na)
+        # print("nb is ", nb)
+
+        if field[na][nb]==0 and visited[na][nb]==0:
+            print("na is ", na)
+            print("nb is ", nb)
+            a = na
+            b = nb
+            c_idx=n_idx
+            visited[na][nb]=1
+            result+=1
+            print(1)
+            break
+        else:
+            print(2)
+        if i==4:
+            if field[a-dx[c_idx]][b-dy[c_idx]]==1:
+                print(3)
+                break
             else:
-                print(2)
-                continue
-            if i==4:
-                if field[a-dx[c_idx]][b-dy[c_idx]]==1:
-                    print(3)
-                    return result
-                else:
-                    print(4)
-                    a -= dx[c_idx]
-                    b -= dy[c_idx]
+                print(4)
+                a -= dx[c_idx]
+                b -= dy[c_idx]
 
     print("for break")
 
