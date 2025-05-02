@@ -1,6 +1,6 @@
 import sys
 
-sys.stdin = open("input.txt", "r")
+sys.stdin = open("input2.txt", "r")
 
 # (와 )의 개수가 맞으면 '균형 잡힌 문자열'
 # (와 )의 짝이 맞는 경우 '올바른 괄호 문자열'
