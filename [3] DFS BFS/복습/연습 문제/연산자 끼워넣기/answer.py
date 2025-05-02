@@ -1,32 +1,40 @@
 import sys
-import itertools
 
-sys.stdin = open("input.txt", "r")
+sys.stdin = open("input_3.txt", "r")
 
 n = int(sys.stdin.readline().rstrip())
 
 n_list = list(map(int, sys.stdin.readline().rstrip().split()))
 
-# (+, -, x, %)
-opr = ['+', '-', '*', '/']
-opr_list = list(map(int, sys.stdin.readline().rstrip().split()))
-oprs = []
-for i in range(4):
-    for _ in range(0, opr_list[i]):
-        oprs.append(opr[i])
+add, sub, mul, div = map(int, sys.stdin.readline().rstrip().split())
 
-print(n)
-print(n_list)
-print(opr_list)
-print(oprs)
-# print(comb_list)
+max_value = -1e9
+min_value = 1e9
 
-for operator in itertools.combinations(oprs, len(oprs)):
-    for i in operator:
-        if i =='+':
+def dfs(i, now):
+    global n, add, sub, mul, div, max_value, min_value
+    if i == n:
+        max_value = max(max_value, now)
+        min_value = min(min_value, now)
+    else:
+        if add>0:
+            add-=1
+            dfs(i+1, now+n_list[i])
+            add+=1
+        if sub>0:
+            sub-=1
+            dfs(i+1, now-n_list[i])
+            sub+=1
+        if mul>0:
+            mul -= 1
+            dfs(i + 1, now * n_list[i])
+            mul += 1
+        if div>0:
+            div -= 1
+            dfs(i + 1, int(now / n_list[i]))
+            div += 1
 
-        elif i == '-':
+dfs(1, n_list[0])
 
-        elif i =='*':
-
-        else:
+print(max_value)
+print(min_value)
